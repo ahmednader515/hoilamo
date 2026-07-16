@@ -6,7 +6,7 @@ import {
 } from "@/lib/site-content";
 
 export type { SiteContentMap };
-export { t } from "@/lib/site-content";
+export { t, getLogoUrl, getHeroVideos } from "@/lib/site-content";
 
 export async function getSiteContent(): Promise<SiteContentMap> {
   const content: SiteContentMap = { ...DEFAULT_SITE_CONTENT };

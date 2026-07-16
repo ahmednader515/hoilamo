@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1088.0",
+    "@aws-sdk/s3-request-presigner": "^3.1089.0",
     "@prisma/client": "^6.19.3",
     "@radix-ui/react-dialog": "^1.1.19",
     "@radix-ui/react-dropdown-menu": "^2.1.20",

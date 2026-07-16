@@ -100,7 +100,20 @@ export const CONTENT_SECTIONS: ContentSection[] = [
   },
 ];
 
+/** Media URLs stored in SiteContent (logo + hero videos) */
+export const MEDIA_CONTENT_KEYS = [
+  "brand.logoUrl",
+  "hero.video1",
+  "hero.video2",
+  "hero.video3",
+] as const;
+
 export const DEFAULT_SITE_CONTENT: Record<string, string> = {
+  "brand.logoUrl": "/logo.png",
+  "hero.video1": "/video-1.mp4",
+  "hero.video2": "/video-2.mp4",
+  "hero.video3": "/video-3.mp4",
+
   "hero.title": "هويلامو",
   "hero.subtitle": "قهوة مختصة",
 
@@ -162,7 +175,10 @@ export const DEFAULT_SITE_CONTENT: Record<string, string> = {
 };
 
 export function allContentKeys() {
-  return CONTENT_SECTIONS.flatMap((s) => s.fields.map((f) => f.key));
+  return [
+    ...CONTENT_SECTIONS.flatMap((s) => s.fields.map((f) => f.key)),
+    ...MEDIA_CONTENT_KEYS,
+  ];
 }
 
 export type SiteContentMap = Record<string, string>;
@@ -172,4 +188,27 @@ export function t(content: SiteContentMap | null | undefined, key: string): stri
     return DEFAULT_SITE_CONTENT[key] ?? "";
   }
   return content[key] ?? DEFAULT_SITE_CONTENT[key] ?? "";
+}
+
+export function getLogoUrl(content: SiteContentMap | null | undefined): string {
+  const url = t(content, "brand.logoUrl").trim();
+  return url || DEFAULT_SITE_CONTENT["brand.logoUrl"];
+}
+
+export function getHeroVideos(
+  content: SiteContentMap | null | undefined
+): string[] {
+  const videos = [
+    t(content, "hero.video1").trim(),
+    t(content, "hero.video2").trim(),
+    t(content, "hero.video3").trim(),
+  ].filter(Boolean);
+
+  return videos.length > 0
+    ? videos
+    : [
+        DEFAULT_SITE_CONTENT["hero.video1"],
+        DEFAULT_SITE_CONTENT["hero.video2"],
+        DEFAULT_SITE_CONTENT["hero.video3"],
+      ];
 }

@@ -2,13 +2,19 @@ import Link from "next/link";
 import { HoilamoLogo } from "@/components/store/hoilamo-logo";
 import { t, type SiteContentMap } from "@/lib/get-site-content";
 
-export function StoreFooter({ content }: { content: SiteContentMap }) {
+export function StoreFooter({
+  content,
+  logoUrl,
+}: {
+  content: SiteContentMap;
+  logoUrl?: string;
+}) {
   return (
     <footer className="mt-auto bg-[#1a120c] text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-3 md:px-10 lg:px-14">
         <div>
           <div className="mb-4 flex items-center gap-3">
-            <HoilamoLogo className="h-16 w-16" />
+            <HoilamoLogo className="h-16 w-16" src={logoUrl} />
             <div>
               <p className="text-sm font-semibold tracking-wide">
                 {t(content, "footer.brand")}

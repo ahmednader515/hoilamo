@@ -15,13 +15,13 @@ import { HoilamoLogo } from "@/components/store/hoilamo-logo";
 
 const initialState: AuthFormState = {};
 
-export function SignInForm() {
+export function SignInForm({ logoUrl }: { logoUrl?: string }) {
   const [state, formAction, pending] = useActionState(login, initialState);
 
   return (
     <Card className="w-full max-w-md border-amber-900/10 bg-white shadow-sm">
       <CardHeader className="items-center text-center">
-        <HoilamoLogo className="mb-2 h-20 w-20" />
+        <HoilamoLogo className="mb-2 h-20 w-20" src={logoUrl} />
         <CardTitle className="text-2xl">تسجيل الدخول</CardTitle>
         <p className="text-sm text-amber-900/60">
           للعملاء والإدارة — مرحباً بعودتك إلى هويلامو
@@ -61,7 +61,7 @@ export function SignInForm() {
   );
 }
 
-export function SignUpForm() {
+export function SignUpForm({ logoUrl }: { logoUrl?: string }) {
   const [state, formAction, pending] = useActionState(
     registerCustomer,
     initialState
@@ -70,7 +70,7 @@ export function SignUpForm() {
   return (
     <Card className="w-full max-w-md border-amber-900/10 bg-white shadow-sm">
       <CardHeader className="items-center text-center">
-        <HoilamoLogo className="mb-2 h-20 w-20" />
+        <HoilamoLogo className="mb-2 h-20 w-20" src={logoUrl} />
         <CardTitle className="text-2xl">إنشاء حساب</CardTitle>
         <p className="text-sm text-amber-900/60">
           انضم إلى هويلامو واطلب مسبقاً للاستلام

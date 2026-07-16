@@ -43,3 +43,19 @@ h6,
   background: #d6b896;
   color: #1a120c;
 }
+
+@keyframes loader-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+.loader-glow {
+  animation: loader-glow 4.5s ease-in-out infinite;
+}

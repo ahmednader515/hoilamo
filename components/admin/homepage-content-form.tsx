@@ -9,6 +9,7 @@ import {
   CONTENT_SECTIONS,
   type ContentSection,
 } from "@/lib/site-content";
+import { MediaUploadField } from "@/components/admin/media-upload-field";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,6 +40,49 @@ export function HomepageContentForm({ initialContent }: Props) {
           {state.success}
         </div>
       )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle>الشعار والفيديوهات</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <p className="text-sm text-amber-900/60">
+            ارفع الشعار وفيديوهات القسم الرئيسي إلى Cloudflare R2، ثم احفظ
+            المحتوى. الشعار يظهر في شاشة التحميل والهيدر والتذييل وصفحات
+            الدخول.
+          </p>
+          <MediaUploadField
+            name="brand.logoUrl"
+            label="شعار الموقع (شاشة التحميل والهيدر)"
+            kind="logo"
+            hint="PNG أو JPEG أو WebP — حتى 4 ميغابايت. يظهر أيضاً في شاشة التحميل."
+            defaultValue={initialContent["brand.logoUrl"]}
+          />
+          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
+            <MediaUploadField
+              name="hero.video1"
+              label="فيديو الصفحة الرئيسية ١"
+              kind="hero"
+              hint="MP4 أو WebM — حتى 80 ميغابايت"
+              defaultValue={initialContent["hero.video1"]}
+            />
+            <MediaUploadField
+              name="hero.video2"
+              label="فيديو الصفحة الرئيسية ٢"
+              kind="hero"
+              hint="MP4 أو WebM — حتى 80 ميغابايت"
+              defaultValue={initialContent["hero.video2"]}
+            />
+            <MediaUploadField
+              name="hero.video3"
+              label="فيديو الصفحة الرئيسية ٣"
+              kind="hero"
+              hint="MP4 أو WebM — حتى 80 ميغابايت"
+              defaultValue={initialContent["hero.video3"]}
+            />
+          </div>
+        </CardContent>
+      </Card>
 
       {CONTENT_SECTIONS.map((section) => (
         <SectionCard

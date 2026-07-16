@@ -7,7 +7,7 @@ A Next.js coffee shop storefront with cash-on-pickup ordering and an admin panel
 - **Next.js** (App Router) + TypeScript
 - **Tailwind CSS** + custom UI components
 - **Neon PostgreSQL** via Prisma
-- **Cloudflare R2** for product images
+- **Cloudflare R2** for product images, logo, and hero videos
 - **NextAuth.js** (credentials) for admin login
 - Client cart with `localStorage`
 
@@ -45,12 +45,13 @@ Copy-Item .env.example .env
 2. Create a project
 3. Copy the connection string into `DATABASE_URL` in `.env`
 
-### 4. Set up Cloudflare R2 (product images)
+### 4. Set up Cloudflare R2 (images & hero videos)
 
 1. In [Cloudflare Dashboard](https://dash.cloudflare.com) → **R2** → create a bucket (e.g. `hoilamo-products`)
 2. Enable public access: bucket **Settings** → **Public access** → connect an `r2.dev` subdomain (or custom domain)
 3. **Manage R2 API Tokens** → create a token with **Object Read & Write** for that bucket
 4. Put Account ID, Access Key ID, Secret, bucket name, and public URL into `.env`
+5. For hero video uploads (browser → R2), set bucket **CORS** to allow `PUT`/`GET`/`HEAD` from your app origin
 
 ### 5. Migrate and seed
 
@@ -86,6 +87,7 @@ npm run dev
 
 - Dashboard: today’s revenue, orders, low stock
 - Product CRUD with **Cloudflare R2** image upload (default + hover images)
+- Homepage content CMS (copy, logo, and hero videos via R2)
 - Order list and status updates (`PENDING` → `READY` → `COMPLETED`)
 - Sales reports with charts and top products
 

@@ -1,14 +1,16 @@
 import { HeroVideoBackground } from "@/components/store/hero-video-background";
 import { TornEdge } from "@/components/store/torn-edge";
-import { t, type SiteContentMap } from "@/lib/get-site-content";
+import { getHeroVideos, t, type SiteContentMap } from "@/lib/get-site-content";
 
 export function HomeHero({ content }: { content: SiteContentMap }) {
+  const videos = getHeroVideos(content);
+
   return (
     <section
       id="home"
       className="relative h-[100svh] min-h-[560px] w-full scroll-mt-0 overflow-x-hidden"
     >
-      <HeroVideoBackground />
+      <HeroVideoBackground videos={videos} />
 
       <div className="relative z-10 flex h-full flex-col justify-end">
         <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-32 md:px-10 md:pb-20 lg:px-14">

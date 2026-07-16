@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { uploadProductImageToR2 } from "@/lib/r2";
+import { uploadImageToR2, type UploadKind } from "@/lib/r2";
 
 export const runtime = "nodejs";
 
@@ -15,6 +15,9 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file = formData.get("file");
+    const kindRaw = formData.get("kind");
+    const kind: Exclude<UploadKind, "hero"> =
+      kindRaw === "logo" ? "logo" : "product";
 
     if (!(file instanceof File)) {
       return NextResponse.json({ error: "لم يتم توفير ملف" }, { status: 400 });
@@ -28,9 +31,10 @@ export async function POST(request: Request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const result = await uploadProductImageToR2(
+    const result = await uploadImageToR2(
       buffer,
-      file.type || "image/jpeg"
+      file.type || "image/jpeg",
+      kind
     );
 
     return NextResponse.json(result);

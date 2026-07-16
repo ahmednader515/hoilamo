@@ -20,9 +20,14 @@ const links = [
 type StoreHeaderProps = {
   userName?: string | null;
   isAdmin?: boolean;
+  logoUrl?: string;
 };
 
-export function StoreHeader({ userName, isAdmin = false }: StoreHeaderProps) {
+export function StoreHeader({
+  userName,
+  isAdmin = false,
+  logoUrl,
+}: StoreHeaderProps) {
   const { itemCount } = useCart();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -99,7 +104,10 @@ export function StoreHeader({ userName, isAdmin = false }: StoreHeaderProps) {
           className="shrink-0 text-white"
           aria-label="هويلامو - الرئيسية"
         >
-          <HoilamoLogo className="h-16 w-16 md:h-20 md:w-20" />
+          <HoilamoLogo
+            className="h-16 w-16 md:h-20 md:w-20"
+            src={logoUrl}
+          />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

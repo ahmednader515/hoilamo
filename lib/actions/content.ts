@@ -33,6 +33,8 @@ export async function updateSiteContent(
       });
     }
 
+    // Revalidate store layout so logo / hero videos update on the loading screen
+    revalidatePath("/", "layout");
     revalidatePath("/");
     revalidatePath("/admin/content");
 

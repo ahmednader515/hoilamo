@@ -1,9 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { HERO_VIDEOS } from "@/lib/hero-videos";
 
-export function HeroVideoBackground() {
+type Props = {
+  videos: string[];
+};
+
+export function HeroVideoBackground({ videos }: Props) {
+  const sources =
+    videos && videos.length > 0 ? videos : ["/video-1.mp4"];
   const [active, setActive] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
@@ -26,12 +31,12 @@ export function HeroVideoBackground() {
   }, [active, playIndex]);
 
   function handleEnded(index: number) {
-    setActive((index + 1) % HERO_VIDEOS.length);
+    setActive((index + 1) % sources.length);
   }
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#1a120c]">
-      {HERO_VIDEOS.map((src, index) => (
+      {sources.map((src, index) => (
         <video
           key={src}
           ref={(el) => {
