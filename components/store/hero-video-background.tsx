@@ -1,8 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-
-const VIDEOS = ["/video-1.mp4", "/video-2.mp4", "/video-3.mp4"];
+import { HERO_VIDEOS } from "@/lib/hero-videos";
 
 export function HeroVideoBackground() {
   const [active, setActive] = useState(0);
@@ -27,12 +26,12 @@ export function HeroVideoBackground() {
   }, [active, playIndex]);
 
   function handleEnded(index: number) {
-    setActive((index + 1) % VIDEOS.length);
+    setActive((index + 1) % HERO_VIDEOS.length);
   }
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#1a120c]">
-      {VIDEOS.map((src, index) => (
+      {HERO_VIDEOS.map((src, index) => (
         <video
           key={src}
           ref={(el) => {
@@ -43,7 +42,7 @@ export function HeroVideoBackground() {
           src={src}
           muted
           playsInline
-          preload={index === 0 ? "auto" : "metadata"}
+          preload="auto"
           onEnded={() => handleEnded(index)}
           aria-hidden
         />
