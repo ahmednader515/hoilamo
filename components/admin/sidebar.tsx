@@ -10,6 +10,7 @@ import {
   BarChart3,
   LogOut,
   FileText,
+  UserCog,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logoutAdmin } from "@/lib/actions/auth";
@@ -21,6 +22,7 @@ const links = [
   { href: "/admin/orders", label: "الطلبات", icon: ShoppingBag },
   { href: "/admin/sales", label: "المبيعات", icon: BarChart3 },
   { href: "/admin/content", label: "محتوى الصفحة", icon: FileText },
+  { href: "/admin/account", label: "حساب المسؤول", icon: UserCog },
 ];
 
 export function AdminSidebar() {
