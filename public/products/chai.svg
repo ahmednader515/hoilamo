@@ -1,0 +1,6 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#f3ebe3"/>
+  <circle cx="200" cy="180" r="90" fill="#c49a6c"/>
+  <ellipse cx="200" cy="280" rx="70" ry="18" fill="#2c1810" opacity="0.15"/>
+  <text x="200" y="360" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#2c1810">chai</text>
+</svg>

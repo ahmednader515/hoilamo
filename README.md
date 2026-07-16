@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hoilamo Coffee Shop
 
-## Getting Started
+A Next.js coffee shop storefront with cash-on-pickup ordering and an admin panel for products, orders, and sales.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js** (App Router) + TypeScript
+- **Tailwind CSS** + custom UI components
+- **Neon PostgreSQL** via Prisma
+- **Cloudflare R2** for product images
+- **NextAuth.js** (credentials) for admin login
+- Client cart with `localStorage`
+
+## Setup
+
+### 1. Install dependencies
+
+```powershell
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure environment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env` and fill in your values:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```powershell
+Copy-Item .env.example .env
+```
 
-## Learn More
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | Neon connection string (from [console.neon.tech](https://console.neon.tech)) |
+| `AUTH_SECRET` | Random secret (`openssl rand -base64 32`) |
+| `NEXTAUTH_URL` | `http://localhost:3000` for local dev |
+| `ADMIN_PASSWORD` | Password for the seeded admin user |
+| `R2_ACCOUNT_ID` | Cloudflare account ID |
+| `R2_ACCESS_KEY_ID` | R2 API token access key |
+| `R2_SECRET_ACCESS_KEY` | R2 API token secret |
+| `R2_BUCKET_NAME` | R2 bucket name (e.g. `hoilamo-products`) |
+| `R2_PUBLIC_URL` | Public bucket URL (`https://pub-xxx.r2.dev` or custom domain) |
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Create Neon database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Sign up / log in at [Neon](https://console.neon.tech)
+2. Create a project
+3. Copy the connection string into `DATABASE_URL` in `.env`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Set up Cloudflare R2 (product images)
 
-## Deploy on Vercel
+1. In [Cloudflare Dashboard](https://dash.cloudflare.com) → **R2** → create a bucket (e.g. `hoilamo-products`)
+2. Enable public access: bucket **Settings** → **Public access** → connect an `r2.dev` subdomain (or custom domain)
+3. **Manage R2 API Tokens** → create a token with **Object Read & Write** for that bucket
+4. Put Account ID, Access Key ID, Secret, bucket name, and public URL into `.env`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 5. Migrate and seed
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```powershell
+npx prisma migrate dev --name init
+npm run db:seed
+```
+
+This creates tables and seeds:
+
+- Admin: `admin@coffeeshop.com` / value of `ADMIN_PASSWORD` (default `admin123`)
+- Sample categories and products
+
+### 6. Run the app
+
+```powershell
+npm run dev
+```
+
+- Store: [http://localhost:3000](http://localhost:3000)
+- Admin: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
+
+## Features
+
+### Customer storefront
+
+- Home, menu (with category filters), product detail
+- Cart and checkout (cash on pickup)
+- Order confirmation with order number
+- About and contact pages
+
+### Admin panel
+
+- Dashboard: today’s revenue, orders, low stock
+- Product CRUD with **Cloudflare R2** image upload (default + hover images)
+- Order list and status updates (`PENDING` → `READY` → `COMPLETED`)
+- Sales reports with charts and top products
+
+## Useful scripts
+
+```powershell
+npm run db:migrate   # run migrations
+npm run db:seed      # seed admin + sample products
+npm run db:studio    # open Prisma Studio
+npm run build        # production build
+```
