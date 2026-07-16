@@ -1,5 +1,4 @@
 import { Coffee, Heart, Leaf } from "lucide-react";
-import { TornEdge } from "@/components/store/torn-edge";
 import { t, type SiteContentMap } from "@/lib/get-site-content";
 
 export function StorySection({ content }: { content: SiteContentMap }) {
@@ -52,8 +51,6 @@ export function StorySection({ content }: { content: SiteContentMap }) {
           ))}
         </div>
       </div>
-
-      <TornEdge fill="#faf6f1" />
     </section>
   );
 }
